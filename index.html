@@ -21,7 +21,7 @@
     <hr class="my-4">
     <p class="lead" id = "question">
     </p>
-    <a class="btn btn-primary btn-lg" id= "show-question" role="button">Let's Go</a>
+    <a class="btn btn-primary btn-lg" id= "start" role="button">Let's Go</a>
 <br/>
 <br/>
     <div class="btn-group-vertical">
@@ -34,6 +34,20 @@
   </div>
 
 
+  <div class="alert alert-success" role="alert" id = "correct-message">
+    <h4 class="alert-heading">Well done!</h4>
+    <p>YOU GOT IT!.</p>
+    <hr>
+    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+  </div>
+
+
+  <div class="alert alert-warning alert-dismissible fade show" role="alert" id = "incorrect-message">
+    <strong>Holy guacamole!</strong> Try again!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
     <!-- <h1 class="text-center" >Trivia Night! </h1>
 
