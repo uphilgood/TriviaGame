@@ -48,7 +48,7 @@ $(document).ready(function () {
                 q: "What team did former Washington Redskins quarterback, Kirk Cousins, go to?",
                 selected: false,
                 options: 
-                [{choice: "Detriot Lions",
+                [{choice: "Detroit Lions",
                 answer: false},
                 {choice: "LA Rams",
                 answer: false},
@@ -75,16 +75,25 @@ $(document).ready(function () {
         ],
 
 
-        initialize: function () {
+        random: function () {
+
+            if (newArray.length === this.questions.length) {
+                alert("GAME OVER")
+                $('#start').show()
+            }
+            
+           
             $('#answer1').hide()
             $('#answer2').hide()
             $('#answer3').hide()
             $('#answer4').hide()
+            $('#start').hide()
             $('#incorrect-message').hide()
             $('#correct-message').hide()
             randomQuestion = this.questions[Math.floor(Math.random() * this.questions.length)];
             indOfQuestion = this.questions.indexOf(randomQuestion)
-            rightAnswer = '';
+            this.questions[indOfQuestion].selected = true
+            newArray.push(this.questions[indOfQuestion])
             $('#answer1').show()
             $('#answer2').show()
             $('#answer3').show()
@@ -95,97 +104,123 @@ $(document).ready(function () {
             $('#answer3').html(this.questions[indOfQuestion].options[2].choice)
             $('#answer4').html(this.questions[indOfQuestion].options[3].choice)
 
-             if (indOfQuestion === 0) {
-   
-        $('#answer1').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer2').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer3').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer4').click(function () {
-            $('#correct-message').show()
-        })
-    }  else if (indOfQuestion === 1) {
+            
+            run()
       
-        $('#answer1').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer2').click(function () {
-            $('#correct-message').show()
-        })
-        $('#answer3').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer4').click(function () {
-            $('#incorrect-message').show()
-        })
-    }  else if (indOfQuestion === 2) {
-     
-        $('#answer1').click(function () {
-            $('#correct-message').show()
-        })
-        $('#answer2').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer3').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer4').click(function () {
-            $('#incorrect-message').show()
-        })
-    }  else if (indOfQuestion === 3) {
-        
-        $('#answer1').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer2').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer3').click(function () {
-            $('#correct-message').show()
-        })
-        $('#answer4').click(function () {
-            $('#incorrect-message').show()
-        })
-    }  else {
-        
-        $('#answer1').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer2').click(function () {
-            $('#incorrect-message').show()
-        })
-        $('#answer3').click(function () {
-            $('#correct-message').show()
-        })
-        $('#answer4').click(function () {
-            $('#incorrect-message').show()
-        })
-    }
-       
-        },
-            // $('#start').hide()
 
-            // $("#answer4").click(function(){
-            //     alert("Value: " + $("#answer4").html());
-            // });
+            console.log(this.questions)
+        },
+
+     checkCorrect: function () {
+         
+
+        if (indOfQuestion === 0 ) {
+          
+          if (this.getAttribute("data-name") == 4) {
+            $('#correct-message').show()
+            stop()
+            
+          }
+         
+        } 
+
+        if (indOfQuestion === 1 ) {
+            if (this.getAttribute("data-name") == 2) {
+                $('#correct-message').show()
+            stop()
+          
+            }
+            
+        }
+        if (indOfQuestion === 2 ) {
+            if (this.getAttribute("data-name") == 1) {
+                $('#correct-message').show()
+            stop()
+            
+            }
+            
+        }
+        if (indOfQuestion === 3) {
+            if (this.getAttribute("data-name") == 3) {
+                $('#correct-message').show()
+            stop()
+            
+            }
+           
+        }
+        if (indOfQuestion === 4 ) {
+            if (this.getAttribute("data-name") == 3) {
+                $('#correct-message').show()
+            stop()
+            
+            }
         
+        }
+       
+     }
+     
     };
 
+    var newArray = [];
+
+    function run() {
+        number = 15;
+        intervalId = ''
+
+        clearInterval(intervalId);
+        intervalId = setInterval(decrement, 1000);
+      }
+  
+      //  The decrement function.
+      function decrement() {
+  
+        //  Decrease number by one.
+        number--;
+  
+        //  Show the number in the #show-number tag.
+        $("#show-number").html("<h2>" + number + "</h2>");
+  
+  
+        //  Once number hits zero...
+        if (number === 0) {
+  
+          //  ...run the stop function.
+          stop();
+  
+          //  Alert the user that time is up.
+          alert("Time Up!");
+         
+          trivia.random()
+        }
+      }
+  
+      //  The stop function
+      function stop() {
+  
+        //  Clears our intervalId
+        //  We just pass the name of the interval
+        //  to the clearInterval function.
+        clearInterval(intervalId);
+      }
 
 
-    trivia.initialize();
+ 
+
+    $(document).on("click", ".btn-primary", trivia.checkCorrect);
+
+
+    trivia.random();
 
 
     console.log(randomQuestion)
 
 
     $('#start').click(function () {
-        trivia.initialize()
+        trivia.random()
+    })
+
+    $('#next-question').click(function () {
+        trivia.random()
     })
   
 
