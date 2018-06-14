@@ -1,167 +1,169 @@
 $(document).ready(function () {
-
+    var newArray = [];
+    var thisQuestionAnswer = '';
+    var yourPoints = 0;
+    var totalNumOfQuestions = 5
     var trivia = {
-        questions: [
-            {
+        questions: [{
                 q: "Who won the 2017 NFL SuperBowl?",
                 selected: false,
-                options: 
-                [{choice: "redskins",
-                answer: false},
-                {choice: "49ers",
-                answer: false},
-                {choice: "Patriots",
-                answer: false},
-                {choice: "Eagles",
-                answer: true}]
+                options: [{
+                        choice: "redskins",
+                        answer: ''
+                    },
+                    {
+                        choice: "49ers",
+                        answer: ''
+                    },
+                    {
+                        choice: "Patriots",
+                        answer: ''
+                    },
+                    {
+                        choice: "Eagles",
+                        answer: "Eagles"
+                    }
+                ]
             },
 
             {
                 q: "What country hosted this year's Winter Olympics?",
                 selected: false,
-                options: 
-                [{choice: "Germany",
-                answer: false},
-                {choice: "Korea",
-                answer: true},
-                {choice: "Russia",
-                answer: false},
-                {choice: "USA",
-                answer: false}]
+                options: [{
+                        choice: "Germany",
+                        answer: ''
+                    },
+                    {
+                        choice: "Korea",
+                        answer: "Korea"
+                    },
+                    {
+                        choice: "Russia",
+                        answer: ''
+                    },
+                    {
+                        choice: "USA",
+                        answer: ''
+                    }
+                ]
             },
 
             {
                 q: "What team won the 2018 Stanley Cup?",
                 selected: false,
-                options: 
-                [{choice: "Washington Capitals",
-                answer: true},
-                {choice: "Pittsburg Pengiuns",
-                answer: false},
-                {choice: "Las Vegas Golden Knights",
-                answer: false},
-                {choice: "San Jose Sharks",
-                answer: false}]
+                options: [{
+                        choice: "Washington Capitals",
+                        answer: "Washington Capitals"
+                    },
+                    {
+                        choice: "Pittsburg Pengiuns",
+                        answer: ''
+                    },
+                    {
+                        choice: "Las Vegas Golden Knights",
+                        answer: ''
+                    },
+                    {
+                        choice: "San Jose Sharks",
+                        answer: ''
+                    }
+                ]
             },
 
             {
                 q: "What team did former Washington Redskins quarterback, Kirk Cousins, go to?",
                 selected: false,
-                options: 
-                [{choice: "Detroit Lions",
-                answer: false},
-                {choice: "LA Rams",
-                answer: false},
-                {choice: "Minnesota Vikings",
-                answer: true},
-                {choice: "New York Giants",
-                answer: false}]
-               
+                options: [{
+                        choice: "Detroit Lions",
+                        answer: ''
+                    },
+                    {
+                        choice: "LA Rams",
+                        answer: ''
+                    },
+                    {
+                        choice: "Minnesota Vikings",
+                        answer: "Minnesota Vikings"
+                    },
+                    {
+                        choice: "New York Giants",
+                        answer: ''
+                    }
+                ]
+
             },
 
             {
                 q: "What country is hosting this year's Fifa World Cup?",
                 selected: false,
-                options: 
-                [{choice: "Germany",
-                answer: false},
-                {choice: "Korea",
-                answer: false},
-                {choice: "Russia",
-                answer: true},
-                {choice: "USA",
-                answer: false}]
+                options: [{
+                        choice: "Germany",
+                        answer: ''
+                    },
+                    {
+                        choice: "Korea",
+                        answer: ''
+                    },
+                    {
+                        choice: "Russia",
+                        answer: "Russia"
+                    },
+                    {
+                        choice: "USA",
+                        answer: ''
+                    }
+                ]
             }
         ],
-
-
         random: function () {
-
             if (newArray.length === this.questions.length) {
                 alert("GAME OVER")
                 $('#start').show()
             }
-            
-           
-            $('#answer1').hide()
-            $('#answer2').hide()
-            $('#answer3').hide()
-            $('#answer4').hide()
+            $('#buttons-view').empty()
+            $('#right').hide()
             $('#start').hide()
-            $('#incorrect-message').hide()
-            $('#correct-message').hide()
+            $("#points").html("<h2>" + "Correct Questions: " + yourPoints + "/" + totalNumOfQuestions +  "</h2>");
+            thisQuestionAnswer = ''
             randomQuestion = this.questions[Math.floor(Math.random() * this.questions.length)];
             indOfQuestion = this.questions.indexOf(randomQuestion)
-            this.questions[indOfQuestion].selected = true
-            newArray.push(this.questions[indOfQuestion])
-            $('#answer1').show()
-            $('#answer2').show()
-            $('#answer3').show()
-            $('#answer4').show()
+
+            this.questions[indOfQuestion].options.forEach(choice => {
+
+                var a = $("<button>")
+                a.addClass("btn btn-primary").attr
+
+                ({
+                    dataname: choice.answer,
+                    id: choice.choice
+                }).text(choice.choice)
+
+                $('#buttons-view').append(a)
+                console.log(choice)
+            })
+
+            console.log(randomQuestion)
             $('#question').html(this.questions[indOfQuestion].q)
-            $('#answer1').html(this.questions[indOfQuestion].options[0].choice)
-            $('#answer2').html(this.questions[indOfQuestion].options[1].choice)
-            $('#answer3').html(this.questions[indOfQuestion].options[2].choice)
-            $('#answer4').html(this.questions[indOfQuestion].options[3].choice)
 
-            
+            // this.questions[indOfQuestion].selected = true;
+            newArray = this.questions.splice(indOfQuestion, 1)
+
             run()
-      
-
-            console.log(this.questions)
         },
 
-     checkCorrect: function () {
-         
+        checkCorrect: function () {
 
-        if (indOfQuestion === 0 ) {
-          
-          if (this.getAttribute("data-name") == 4) {
-            $('#correct-message').show()
-            stop()
-            
-          }
-         
-        } 
-
-        if (indOfQuestion === 1 ) {
-            if (this.getAttribute("data-name") == 2) {
-                $('#correct-message').show()
-            stop()
-          
+            if (this.getAttribute("dataname") == this.getAttribute("id")) {
+                yourPoints++
+                console.log(this.getAttribute("id"))
+                $('#right').show()
+                stop()
+            } else {
+                alert("wrong, keep trying")
             }
-            
+ 
         }
-        if (indOfQuestion === 2 ) {
-            if (this.getAttribute("data-name") == 1) {
-                $('#correct-message').show()
-            stop()
-            
-            }
-            
-        }
-        if (indOfQuestion === 3) {
-            if (this.getAttribute("data-name") == 3) {
-                $('#correct-message').show()
-            stop()
-            
-            }
-           
-        }
-        if (indOfQuestion === 4 ) {
-            if (this.getAttribute("data-name") == 3) {
-                $('#correct-message').show()
-            stop()
-            
-            }
-        
-        }
-       
-     }
-     
     };
-
-    var newArray = [];
 
     function run() {
         number = 15;
@@ -169,51 +171,26 @@ $(document).ready(function () {
 
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
-      }
-  
-      //  The decrement function.
-      function decrement() {
-  
-        //  Decrease number by one.
-        number--;
-  
-        //  Show the number in the #show-number tag.
-        $("#show-number").html("<h2>" + number + "</h2>");
-  
-  
-        //  Once number hits zero...
-        if (number === 0) {
-  
-          //  ...run the stop function.
-          stop();
-  
-          //  Alert the user that time is up.
-          alert("Time Up!");
-         
-          trivia.random()
+    }
+
+    function decrement() {  //  The decrement function.
+        
+        number--;  //  Decrease number by one.
+        $("#show-number").html("<h2>" + number + "</h2>"); //  Show the number in the #show-number tag.
+        if (number === 0) {  //  Once number hits zero...
+            stop(); //  ...run the stop function.
+            alert("Time Up!"); //  Alert the user that time is up.
+            trivia.random()
         }
-      }
-  
-      //  The stop function
-      function stop() {
-  
-        //  Clears our intervalId
-        //  We just pass the name of the interval
-        //  to the clearInterval function.
+    }
+    
+    function stop() {  //  The stop function
         clearInterval(intervalId);
-      }
+    }
 
-
- 
-
-    $(document).on("click", ".btn-primary", trivia.checkCorrect);
-
+    $(document).on("click", ".btn", trivia.checkCorrect);
 
     trivia.random();
-
-
-    console.log(randomQuestion)
-
 
     $('#start').click(function () {
         trivia.random()
@@ -222,6 +199,9 @@ $(document).ready(function () {
     $('#next-question').click(function () {
         trivia.random()
     })
-  
+
+    $('#next-question2').click(function () {
+        trivia.random()
+    })
 
 })
