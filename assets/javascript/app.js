@@ -2,7 +2,7 @@ $(document).ready(function () {
     var newArray = [];
     var thisQuestionAnswer = '';
     var yourPoints = 0;
-    var totalNumOfQuestions = 5
+    var totalNumOfQuestions = 10
     var trivia = {
         questions: [{
                 q: "Who won the 2017 NFL SuperBowl?",
@@ -113,7 +113,113 @@ $(document).ready(function () {
                         answer: ''
                     }
                 ]
+            },
+            {
+                q: "What team did Micheal Jordan play with after the Bulls?",
+                selected: false,
+                options: [{
+                        choice: "DetroitPistons",
+                        answer: ''
+                    },
+                    {
+                        choice: "New Jersey Nets",
+                        answer: ''
+                    },
+                    {
+                        choice: "Washington Wizards",
+                        answer: "Washington Wizards"
+                    },
+                    {
+                        choice: "Boston Celtics",
+                        answer: ''
+                    }
+                ]
+            },
+            {
+                q: "Who was the highest paid athletic in 2017?",
+                selected: false,
+                options: [{
+                        choice: "Floyd Mayweather",
+                        answer: "Floyd Mayweather"
+                    },
+                    {
+                        choice: "Conor McGregor",
+                        answer: ''
+                    },
+                    {
+                        choice: "Cristano Ronaldo",
+                        answer: ""
+                    },
+                    {
+                        choice: "Steph Curry",
+                        answer: ''
+                    }
+                ]
+            },
+            {
+                q: "Who won the NBA Finals MVP in 2018?",
+                selected: false,
+                options: [{
+                        choice: "Steph Curry",
+                        answer: ""
+                    },
+                    {
+                        choice: "Kevin Durant",
+                        answer: "Kevin Durant"
+                    },
+                    {
+                        choice: "LeBron James",
+                        answer: ""
+                    },
+                    {
+                        choice: "Michael Jordan",
+                        answer: ''
+                    }
+                ]
+            },
+            {
+                q: "Which many Super Bowls did the Pittsburgh Steelers win?",
+                selected: false,
+                options: [{
+                        choice: "5",
+                        answer: ""
+                    },
+                    {
+                        choice: "6",
+                        answer: "6"
+                    },
+                    {
+                        choice: "2",
+                        answer: ""
+                    },
+                    {
+                        choice: "3",
+                        answer: ''
+                    }
+                ]
+            },
+            {
+                q: "How many players are playing on soccer field per team?",
+                selected: false,
+                options: [{
+                        choice: "11",
+                        answer: "11"
+                    },
+                    {
+                        choice: "6",
+                        answer: ""
+                    },
+                    {
+                        choice: "10",
+                        answer: ""
+                    },
+                    {
+                        choice: "13",
+                        answer: ''
+                    }
+                ]
             }
+
         ],
         random: function () {
             if (newArray.length === this.questions.length) {
@@ -123,7 +229,7 @@ $(document).ready(function () {
             $('#buttons-view').empty()
             $('#right').hide()
             $('#start').hide()
-            $("#points").html("<h2>" + "Correct Questions: " + yourPoints + "/" + totalNumOfQuestions +  "</h2>");
+            $("#points").html("<h4>" + "Correct Questions: " + yourPoints + "/" + totalNumOfQuestions +  "</h4>");
             thisQuestionAnswer = ''
             randomQuestion = this.questions[Math.floor(Math.random() * this.questions.length)];
             indOfQuestion = this.questions.indexOf(randomQuestion)
@@ -143,7 +249,7 @@ $(document).ready(function () {
             })
 
             console.log(randomQuestion)
-            $('#question').html(this.questions[indOfQuestion].q)
+            $('#question').html("<h2>" + this.questions[indOfQuestion].q + "</h2>")
 
             // this.questions[indOfQuestion].selected = true;
             newArray = this.questions.splice(indOfQuestion, 1)
@@ -157,6 +263,7 @@ $(document).ready(function () {
                 yourPoints++
                 console.log(this.getAttribute("id"))
                 $('#right').show()
+                $("#rightanswer").html("Great!  The correct answer was " + this.getAttribute("dataname"))
                 stop()
             } else {
                 alert("wrong, keep trying")
